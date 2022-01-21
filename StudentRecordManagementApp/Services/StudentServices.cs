@@ -1,7 +1,7 @@
 ﻿
 namespace StudentRecordManagementApp.Services
 {
-    public class StudentServices:IStudentService
+    public class StudentServices : IStudentService
     {
         private readonly IConfiguration _configuration;
         public string ConnectionString { get; set; }
@@ -18,16 +18,16 @@ namespace StudentRecordManagementApp.Services
         }
         public string AddStudent(Student std)
         {
-            string result=string.Empty;
+            string result = string.Empty;
             try
             {
                 using (IDbConnection dbConnection = Connection)
                 {
                     dbConnection.Open();
-                    var _students = dbConnection.Query<Student>("InsertStudentRecord", new { FullName=std.FullName, EmailAddress=std.EmailAddress,City=std.City, CreatedBy=1 }, commandType: CommandType.StoredProcedure).ToList();
+                    var _students = dbConnection.Query<Student>("InsertStudentRecord", new { FullName = std.FullName, EmailAddress = std.EmailAddress, City = std.City, CreatedBy = 1 }, commandType: CommandType.StoredProcedure).ToList();
                     if (_students != null && _students.FirstOrDefault().Response == "Saved Successfully")
                     {
-                        result= "Saved Successfully";
+                        result = "Saved Successfully";
                     }
                     dbConnection.Close();
                 }
@@ -40,7 +40,7 @@ namespace StudentRecordManagementApp.Services
         }
         public List<Student> GetStudentsList()
         {
-            List <Student> results= new List<Student>();
+            List<Student> results = new List<Student>();
             try
             {
                 using (IDbConnection dbConnection = Connection)
@@ -111,9 +111,9 @@ namespace StudentRecordManagementApp.Services
     }
     public interface IStudentService
     {
-        public string AddStudent(Student std);
-        public string UpdateStudent(Student std);
-        public string DeleteStudent(int studentID);
-        public List<Student> GetStudentsList();
+        string AddStudent(Student std);
+        string UpdateStudent(Student std);
+        string DeleteStudent(int studentID);
+        List<Student> GetStudentsList();
     }
 }
